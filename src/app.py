@@ -38,6 +38,45 @@ activities = {
       "schedule": "Segundas, quartas e sextas, 14h - 15h",
       "max_participants": 30,
       "participants": ["john@mergington.edu", "olivia@mergington.edu"]
+   },
+   # Esportivas
+   "Futebol": {
+      "description": "Treinamento e partidas de futebol para todos os níveis",
+      "schedule": "Terças e quintas, 16h - 17h30",
+      "max_participants": 22,
+      "participants": ["lucas@mergington.edu", "ana@mergington.edu"]
+   },
+   "Vôlei": {
+      "description": "Aulas e jogos de vôlei para iniciantes e avançados",
+      "schedule": "Quartas, 15h - 16h30",
+      "max_participants": 14,
+      "participants": ["marcos@mergington.edu", "carla@mergington.edu"]
+   },
+   # Artísticas
+   "Teatro": {
+      "description": "Oficina de teatro e expressão corporal",
+      "schedule": "Sextas, 17h - 18h30",
+      "max_participants": 18,
+      "participants": ["juliana@mergington.edu", "paulo@mergington.edu"]
+   },
+   "Clube de Artes": {
+      "description": "Desenho, pintura e outras atividades artísticas",
+      "schedule": "Segundas, 16h - 17h30",
+      "max_participants": 15,
+      "participants": ["lara@mergington.edu", "renato@mergington.edu"]
+   },
+   # Intelectuais
+   "Clube de Leitura": {
+      "description": "Leitura e discussão de livros clássicos e contemporâneos",
+      "schedule": "Quintas, 17h - 18h",
+      "max_participants": 16,
+      "participants": ["beatriz@mergington.edu", "gustavo@mergington.edu"]
+   },
+   "Olimpíada de Matemática": {
+      "description": "Preparação para olimpíadas e desafios matemáticos",
+      "schedule": "Sábados, 10h - 12h",
+      "max_participants": 25,
+      "participants": ["carlos@mergington.edu", "aline@mergington.edu"]
    }
 }
 
@@ -62,6 +101,10 @@ def signup_for_activity(activity_name: str, email: str):
     # Get the specificy activity
     activity = activities[activity_name]
 
+    # Validar se o estudante já está inscrito
+    if email in activity["participants"]:
+       raise HTTPException(status_code=400, detail=f"{email} já está inscrito(a) em {activity_name}")    
+    
     # Add student
     activity["participants"].append(email)
     return {"message": f"{email} inscrito(a) em {activity_name} com sucesso"}
